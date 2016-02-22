@@ -403,9 +403,19 @@ module
              * @returns {*}
              * @private
              */
-            FileUploader.prototype._transformResponse = function(response) {
-                angular.forEach($http.defaults.transformResponse, function(transformFn) {
-                    response = transformFn(response);
+            FileUploader.prototype._transformResponse = function(response, headers) {
+                            angular.forEach($http.defaults.transformResponse, function(transformFn) {
+                                response = transformFn(response, function(_name) {
+            				        if (_name) {
+            				            var lowercase = function(string) {return (typeof string === 'string') ? string.toLowerCase() : string;};
+            
+            				            var value = headers[_name.toLowerCase()];
+            				            if (value === void 0) {
+            					            value = null;
+            				            }
+            				        }
+            				        return value; 
+            			});
                 });
                 return response;
             };
