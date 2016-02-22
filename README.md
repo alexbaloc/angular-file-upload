@@ -1,5 +1,9 @@
  # Angular File Upload
 
+## Changes - alexb
+angular-file-upload 1.2.0 together with Angular 1.4.8 are not able to translate JSON messages received after the upload operation,
+The standard http interceptors defined by Angular are not being called with the header parsing function. 
+
 ## v1.2.0
 * added grunt watch task. Please use ```grunt watch``` to automatically build angular-file-upload.* files for easier development
 * imported ngThumb directive in angularFileUpload moudule
