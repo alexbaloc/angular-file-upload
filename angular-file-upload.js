@@ -557,7 +557,7 @@ module
 
                 xhr.onload = function() {
                     var headers = that._parseHeaders(xhr.getAllResponseHeaders());
-                    var response = that._transformResponse(xhr.response);
+                    var response = that._transformResponse(xhr.response, headers);
                     var gist = that._isSuccessCode(xhr.status) ? 'Success' : 'Error';
                     var method = '_on' + gist + 'Item';
                     that[method](item, response, xhr.status, headers);
@@ -566,14 +566,14 @@ module
 
                 xhr.onerror = function() {
                     var headers = that._parseHeaders(xhr.getAllResponseHeaders());
-                    var response = that._transformResponse(xhr.response);
+                    var response = that._transformResponse(xhr.response, headers);
                     that._onErrorItem(item, response, xhr.status, headers);
                     that._onCompleteItem(item, response, xhr.status, headers);
                 };
 
                 xhr.onabort = function() {
                     var headers = that._parseHeaders(xhr.getAllResponseHeaders());
-                    var response = that._transformResponse(xhr.response);
+                    var response = that._transformResponse(xhr.response, headers);
                     that._onCancelItem(item, response, xhr.status, headers);
                     that._onCompleteItem(item, response, xhr.status, headers);
                 };
@@ -639,8 +639,8 @@ module
                     } catch (e) {}
 
                     var xhr = {response: html, status: 200, dummy: true};
-                    var response = that._transformResponse(xhr.response);
-                    var headers = {};
+                    var headers = {};					
+                    var response = that._transformResponse(xhr.response, headers);
 
                     that._onSuccessItem(item, response, xhr.status, headers);
                     that._onCompleteItem(item, response, xhr.status, headers);
